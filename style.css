@@ -1,0 +1,366 @@
+#carouselbox {
+  max-height: 300px; /* tinggi maksimal */
+  width: auto; /* biar proporsional */
+  margin: 0 auto; /* center */
+  object-fit: contain; /* biar gak ketarik */
+}
+/* Base */
+:root {
+  --cream: #f8f6f1;
+  --pink: #ff2a86;
+  --heart: #ff245a;
+}
+
+* {
+  box-sizing: border-box;
+}
+body.bg-cream {
+  background: var(--cream);
+  min-height: 100svh;
+  overflow-x: hidden;
+}
+
+/* headline */
+#hedlinecontainer {
+  margin-bottom: clamp(24px, 4vw, 60px);
+}
+#shine {
+  font-weight: 800;
+  font-size: clamp(22px, 6vw, 60px);
+  color: rgba(255, 0, 102, 0.3);
+  background: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      from(#222),
+      to(#222),
+      color-stop(0.5, #fff)
+    )
+    0 0/150px no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-animation: shine 3s infinite;
+}
+@-webkit-keyframes shine {
+  0%,
+  10% {
+    background-position: -1000px;
+  }
+  20% {
+    background-position: left top;
+  }
+  90% {
+    background-position: right top;
+  }
+  100% {
+    background-position: 1000px;
+  }
+}
+
+/* gallery */
+.gallery {
+  --d: 10s;
+  display: grid;
+  place-items: center;
+  width: clamp(150px, 38vw, 220px);
+}
+.gallery > img {
+  grid-area: 1/1;
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border: 10px solid #f2f2f2;
+  box-shadow: 0 0 4px #0007;
+  z-index: 2;
+  animation: slide var(--d) infinite, z-order var(--d) infinite steps(1);
+  will-change: transform, z-index;
+}
+.gallery img:last-child {
+  animation-name: slide, z-order-last;
+}
+.gallery > img:nth-child(1) {
+  animation-delay: calc(0 * var(--d));
+  --r: 16deg;
+}
+.gallery > img:nth-child(2) {
+  animation-delay: calc(-0.2 * var(--d));
+  --r: -1deg;
+}
+.gallery > img:nth-child(3) {
+  animation-delay: calc(-0.4 * var(--d));
+  --r: -19deg;
+}
+.gallery > img:nth-child(4) {
+  animation-delay: calc(-0.6 * var(--d));
+  --r: 6deg;
+}
+.gallery > img:nth-child(5) {
+  animation-delay: calc(-0.8 * var(--d));
+  --r: -8deg;
+}
+@keyframes slide {
+  0%,
+  100%,
+  20% {
+    transform: translateX(0) rotate(var(--r));
+  }
+  10% {
+    transform: translateX(120%) rotate(var(--r));
+  }
+}
+@keyframes z-order {
+  10%,
+  20% {
+    z-index: 1;
+  }
+  80% {
+    z-index: 2;
+  }
+}
+@keyframes z-order-last {
+  10%,
+  20% {
+    z-index: 1;
+  }
+  90% {
+    z-index: 2;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery > img {
+    animation: none;
+  }
+}
+
+/* extra photo */
+.extra-photo {
+  width: min(420px, 82vw);
+  margin: 0;
+  border: 8px solid #f2f2f2;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.extra-photo > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* text color */
+.text-pink {
+  color: var(--pink);
+}
+
+/* ====== BASE WRAPPER ====== */
+.val-wrap {
+  text-align: center;
+  padding-block: 8px 4px;
+}
+.hearts {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+/* ====== SPARK / SHIMMER TITLE ====== */
+.spark-title {
+  margin: 8px 0 6px;
+  font-weight: 900;
+  font-size: clamp(22px, 6vw, 40px);
+  letter-spacing: 1px;
+  color: #ff1f5a; /* Warna merah solid supaya jelas */
+  position: relative;
+  display: inline-block;
+  padding: 5px 15px;
+  text-shadow: 0 2px 6px rgba(255, 0, 70, 0.35);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Efek shimmer halus di sekitar tulisan */
+.spark-title::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -40%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  animation: shimmer 2.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -40%;
+  }
+  100% {
+    left: 140%;
+  }
+}
+
+/* Efek glow halus */
+@keyframes glow {
+  from {
+    text-shadow: 0 0 4px rgba(255, 36, 90, 0.7), 0 0 12px rgba(255, 36, 90, 0.5);
+  }
+  to {
+    text-shadow: 0 0 10px rgba(255, 36, 90, 0.9),
+      0 0 20px rgba(255, 36, 90, 0.7);
+  }
+}
+
+/* ====== SUBTITLE KECIL ====== */
+.spark-subtitle {
+  margin: 6px 0 16px;
+  font-size: 15px;
+  color: #444; /* Lebih gelap supaya jelas */
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  font-style: italic;
+}
+/* ====== HEART BUTTONS (checkbox + label) ====== */
+.toggle {
+  position: absolute;
+  inline-size: 0;
+  block-size: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.heart {
+  position: relative;
+  width: 150px;
+  aspect-ratio: 1/1;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-block;
+}
+.heart__svg {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+.heart__fill {
+  fill: #ff245a;
+}
+.heart__label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: #000;
+  text-align: center;
+  padding: 10px;
+  line-height: 1.1;
+  letter-spacing: 0.3px;
+  pointer-events: none;
+}
+
+/* ====== KIRI: GLOW ketika dicentang ====== */
+#heart-yes:checked + .heart--yes .heart__svg {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 16px rgba(255, 36, 90, 0.8))
+    drop-shadow(0 0 28px rgba(255, 36, 90, 0.35));
+}
+
+/* ====== KANAN: PECAH ketika dicentang ====== */
+.half {
+  transform-origin: 50% 50%;
+  transition: transform 0.25s ease;
+}
+.crack {
+  stroke: #8a0d2a;
+  stroke-width: 3;
+  fill: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  filter: drop-shadow(0 0 2px rgba(138, 13, 42, 0.5));
+}
+#heart-no:checked + .heart--no .half--left {
+  transform: translate(-9px, -3px) rotate(-12deg);
+}
+#heart-no:checked + .heart--no .half--right {
+  transform: translate(9px, -3px) rotate(12deg);
+}
+#heart-no:checked + .heart--no .crack {
+  opacity: 1;
+}
+
+/* responsive kecil */
+@media (max-width: 420px) {
+  .heart {
+    width: 120px;
+  }
+}
+
+<!-- ====== FOOTER SECTION ====== -->
+<footer class="val-footer">
+  <p class="footer-text">
+    makasih ya udah mau nemenin aku walaupun jarang ketemu 🥹❤️
+  </p>
+
+  <a href="index.html" class="back-button">Kembali ke Main Page</a>
+</footer>
+
+<style>
+  /* ====== FOOTER ====== */
+  .val-footer {
+  margin-top: 40px;
+  padding: 20px 10px 30px;
+  text-align: center;
+  background: transparent;
+}
+
+/* Teks footer */
+.val-footer .footer-text {
+  font-size: 50px;
+  color: #444;
+  font-style: italic;
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+
+/* Tombol kembali */
+.val-footer .back-button {
+  display: inline-block;
+  padding: 12px 26px;
+  font-size: 16px;
+  font-weight: 700;
+  background-color: #ff245a;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(255, 36, 90, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Efek hover tombol */
+.val-footer .back-button:hover {
+  background-color: #e91e63;
+  box-shadow: 0 6px 16px rgba(255, 36, 90, 0.5);
+  transform: scale(1.05);
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 420px) {
+  .val-footer .footer-text {
+    font-size: 14px;
+    padding: 0 14px;
+  }
+
+  .val-footer .back-button {
+    font-size: 14px;
+    padding: 10px 22px;
+  }
+}
